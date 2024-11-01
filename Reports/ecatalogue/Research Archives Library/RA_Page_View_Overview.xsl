@@ -24,8 +24,7 @@
 
                 <!-- If BibType is "Monograph Section", set BibTitle in quotes -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Monograph Section'">
-                    "<xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/>"
-                    <br/>
+                    "<xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/>"<br/>
                 </xsl:when>
 
                 <!-- If BibType is "Series", set BibTitle in italics -->
@@ -40,8 +39,7 @@
 
                 <!-- If BibType is "Series Volume Section", set BibTitle in quotes -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Series Volume Section'">
-                    "<xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/>"
-                    <br/>
+                    "<xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/>"<br/>
                 </xsl:when>
 
                 <!-- If BibType is "Thesis", set BibTitle in italics -->
@@ -52,19 +50,16 @@
                 <!-- If BibType is "Journal", set BibTitle in quotes -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Journal'">
                    <i><xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/></i><br/>
-                    <br/>
                 </xsl:when>
 
                 <!-- If BibType is "Journal Volume", set BibTitle in quotes -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Journal Volume'">
                    <i><xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/></i><br/>
-                    <br/>
                 </xsl:when>
 
                 <!-- If BibType is "Journal Volume Article", set BibTitle in quotes -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Journal Volume Article'">
-                    "<xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/>"
-                    <br/>
+                    "<xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/>"<br/>
                 </xsl:when>
                    
                 <!-- Default case for any other BibType -->
@@ -73,7 +68,59 @@
                 </xsl:otherwise>
             </xsl:choose>
 
-            <b>Subtitle: </b> <xsl:value-of select="table/tuple/atom[@name='BibSubTitle']"/><br/>
+            <b>Subtitle: </b> 
+            
+            <xsl:choose>
+                <!-- If BibType is "Monograph", set BibSubTitle in italics -->
+                <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Monograph'">
+                    <i><xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/></i><br/>
+                </xsl:when>
+
+                <!-- If BibType is "Monograph Section", set BibSubTitle in quotes -->
+                <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Monograph Section'">
+                    "<xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/>"<br/>
+                </xsl:when>
+
+                <!-- If BibType is "Series", set BibSubTitle in italics -->
+                <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Series'">
+                    <i><xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/></i><br/>
+                </xsl:when>
+
+                <!-- If BibType is "Series Volume", set BibSubTitle in italics -->
+                <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Series Volume'">
+                    <i><xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/></i><br/>
+                </xsl:when>
+
+                <!-- If BibType is "Series Volume Section", set BibSubTitle in quotes -->
+                <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Series Volume Section'">
+                    "<xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/>"<br/>
+                </xsl:when>
+
+                <!-- If BibType is "Thesis", set BibSubTitle in italics -->
+                <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Thesis'">
+                    <i><xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/></i><br/>
+                </xsl:when>
+                
+                <!-- If BibType is "Journal", set BibSubTitle in quotes -->
+                <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Journal'">
+                   <i><xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/></i><br/>
+                </xsl:when>
+
+                <!-- If BibType is "Journal Volume", set BibSubTitle in quotes -->
+                <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Journal Volume'">
+                   <i><xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/></i><br/>
+                </xsl:when>
+
+                <!-- If BibType is "Journal Volume Article", set BibSubTitle in quotes -->
+                <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Journal Volume Article'">
+                    "<xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/>"<br/>
+                </xsl:when>
+                   
+                <!-- Default case for any other BibType -->
+                <xsl:otherwise>
+                    <xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/><br/>
+                </xsl:otherwise>
+            </xsl:choose>
             
             <!-- Loop through Author Names -->
             
@@ -90,11 +137,11 @@
                     <b>Parent Title: </b> <xsl:value-of select="atom[@name='ParentTitle']"/><br/>
                 </xsl:if>    
             </xsl:for-each>
+            <b>Parent Date: </b> <xsl:value-of select="/table/tuple/table/tuple/atom[@name='ParentDate']"/><br/>
             
             <b>Edition: </b> <xsl:value-of select="/table/tuple/atom[@name='BibEdition']"/><br/>
             <b>Publisher: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='NamOrganisation']"/><br/>
-            <b>Publication City: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='BibPublicationCity']"/><br/>
-            <b>Parent Date: </b> <xsl:value-of select="/table/tuple/table/tuple/atom[@name='ParentDate']"/><br/>
+            <b>Publication City: </b> <xsl:value-of select="/table/tuple/atom[@name='BibPublicationCity']"/><br/>
             <b>Date: </b> <xsl:value-of select="/table/tuple/atom[@name='BibPublicationDate']"/><br/>
             <b>Pages: </b> <xsl:value-of select="/table/tuple/atom[@name='BibPageNumber']"/><br/>
             <b>Extension: </b> <xsl:value-of select="/table/tuple/atom[@name='BibExtension']"/><br/>
@@ -110,9 +157,13 @@
         <header><h2><b>LOCATIONS</b></h2></header>
         <p></p>
 
-            <b>Current Location: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='CurrentLocation']"/><br/>
             <b>Permanent Location: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='PermanentLocation']"/><br/>
-            
+            <b>Current Location: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='CurrentLocation']"/><br/>
+            <b>Moved By: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='Mover']"/><br/>
+            <b>Requested By: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='MoveRequestor']"/><br/>
+            <b>Why Moved: </b> <xsl:value-of select="/table/tuple/atom[@name='LocMovementReason']"/><br/>
+            <b>Date Moved: </b> <xsl:value-of select="/table/tuple/atom[@name='LocDateMoved']"/><br/>
+                        
         <header><h2><b>NOTES</b></h2></header>
         <p></p>
 
