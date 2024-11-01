@@ -22,7 +22,7 @@
                     <i><xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/></i><br/>
                 </xsl:when>
 
-                <!-- If BibType is "Monograph Section", set BibTitle in quotes -->
+                <!-- If BibType is "Monograph Section", set BibTitle in italics -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Monograph Section'">
                     "<xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/>"<br/>
                 </xsl:when>
@@ -47,12 +47,12 @@
                     <i><xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/></i><br/>
                 </xsl:when>
                 
-                <!-- If BibType is "Journal", set BibTitle in quotes -->
+                <!-- If BibType is "Journal", set BibTitle in italics -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Journal'">
                    <i><xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/></i><br/>
                 </xsl:when>
 
-                <!-- If BibType is "Journal Volume", set BibTitle in quotes -->
+                <!-- If BibType is "Journal Volume", set BibTitle in italics -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Journal Volume'">
                    <i><xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/></i><br/>
                 </xsl:when>
@@ -78,7 +78,12 @@
 
                 <!-- If BibType is "Monograph Section", set BibSubTitle in quotes -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Monograph Section'">
-                    "<xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/>"<br/>
+                    <xsl:if test="normalize-space(/table/tuple/atom[@name='BibSubTitle']) != '0' and normalize-space(/table/tuple/atom[@name='BibSubTitle']) != ''">
+                        "<xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/>"<br/>
+                    </xsl:if>
+                    <xsl:if test="normalize-space(/table/tuple/atom[@name='BibSubTitle']) = '0' or normalize-space(/table/tuple/atom[@name='BibSubTitle']) = ''">
+                        <xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/><br/>
+                    </xsl:if>
                 </xsl:when>
 
                 <!-- If BibType is "Series", set BibSubTitle in italics -->
@@ -93,7 +98,12 @@
 
                 <!-- If BibType is "Series Volume Section", set BibSubTitle in quotes -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Series Volume Section'">
-                    "<xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/>"<br/>
+                    <xsl:if test="normalize-space(/table/tuple/atom[@name='BibSubTitle']) != '0' and normalize-space(/table/tuple/atom[@name='BibSubTitle']) != ''">
+                        "<xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/>"<br/>
+                    </xsl:if>
+                    <xsl:if test="normalize-space(/table/tuple/atom[@name='BibSubTitle']) = '0' or normalize-space(/table/tuple/atom[@name='BibSubTitle']) = ''">
+                        <xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/><br/>
+                    </xsl:if>
                 </xsl:when>
 
                 <!-- If BibType is "Thesis", set BibSubTitle in italics -->
@@ -101,17 +111,17 @@
                     <i><xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/></i><br/>
                 </xsl:when>
                 
-                <!-- If BibType is "Journal", set BibSubTitle in quotes -->
+                <!-- If BibType is "Journal", set BibSubTitle in italics -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Journal'">
                    <i><xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/></i><br/>
                 </xsl:when>
 
-                <!-- If BibType is "Journal Volume", set BibSubTitle in quotes -->
+                <!-- If BibType is "Journal Volume", set BibSubTitle in italics -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Journal Volume'">
                    <i><xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/></i><br/>
                 </xsl:when>
 
-                <!-- If BibType is "Journal Volume Article", set BibSubTitle in quotes -->
+                <!-- If BibType is "Journal Volume Article", set BibSubTitle in quotes, ignore blank data -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Journal Volume Article'">
                     <xsl:if test="normalize-space(/table/tuple/atom[@name='BibSubTitle']) != '0' and normalize-space(/table/tuple/atom[@name='BibSubTitle']) != ''">
                         "<xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/>"<br/>
@@ -142,6 +152,7 @@
                     <b>Parent Title: </b> <xsl:value-of select="atom[@name='ParentTitle']"/><br/>
                 </xsl:if>    
             </xsl:for-each>
+            
             <b>Parent Date: </b> <xsl:value-of select="/table/tuple/table/tuple/atom[@name='ParentDate']"/><br/>
             
             <b>Edition: </b> <xsl:value-of select="/table/tuple/atom[@name='BibEdition']"/><br/>
