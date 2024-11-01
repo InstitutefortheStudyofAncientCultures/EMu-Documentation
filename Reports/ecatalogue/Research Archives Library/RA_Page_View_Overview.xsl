@@ -113,7 +113,12 @@
 
                 <!-- If BibType is "Journal Volume Article", set BibSubTitle in quotes -->
                 <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Journal Volume Article'">
-                    "<xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/>"<br/>
+                    <xsl:if test="normalize-space(/table/tuple/atom[@name='BibSubTitle']) != '0' and normalize-space(/table/tuple/atom[@name='BibSubTitle']) != ''">
+                        "<xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/>"<br/>
+                    </xsl:if>
+                    <xsl:if test="normalize-space(/table/tuple/atom[@name='BibSubTitle']) = '0' or normalize-space(/table/tuple/atom[@name='BibSubTitle']) = ''">
+                        <xsl:value-of select="/table/tuple/atom[@name='BibSubTitle']"/><br/>
+                    </xsl:if>
                 </xsl:when>
                    
                 <!-- Default case for any other BibType -->
