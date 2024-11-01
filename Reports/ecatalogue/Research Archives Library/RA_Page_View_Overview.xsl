@@ -31,12 +31,21 @@
             </xsl:for-each>
             
             <b>Publisher: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='NamOrganisation']"/><br/>
+            <b>Publication City: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='BibPublicationCity']"/><br/>
             <b>Parent Date: </b> <xsl:value-of select="/table/tuple/table/tuple/atom[@name='ParentDate']"/><br/>
             <b>Date: </b> <xsl:value-of select="/table/tuple/atom[@name='BibPublicationDate']"/><br/>
             <b>Pages: </b> <xsl:value-of select="/table/tuple/atom[@name='BibPageNumber']"/><br/>
             <b>Current Location: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='CurrentLocation']"/><br/>
             <b>Permanent Location: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='PermanentLocation']"/><br/>
             
+             <!-- Loop through Notes -->
+
+            <xsl:for-each select="/table/tuple/table/tuple">
+                <xsl:if test="count(atom[@name='NteNotes'][normalize-space()]) > 0">
+                    <b>Note: </b> <xsl:value-of select="atom[@name='NteNotes']"/><br/>
+                </xsl:if>
+            </xsl:for-each>
+
             <!-- Loop through Note Kinds -->
 
             <xsl:for-each select="/table/tuple/table/tuple">
