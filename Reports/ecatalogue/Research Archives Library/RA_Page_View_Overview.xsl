@@ -5,10 +5,14 @@
     <xsl:template match="/">
     <html>
         <head>
-            <title>Research Archives Page View 1</title>
+            <title>Research Archives Record Overview Page View</title>
         </head>
 
         <body bgcolor="#EBECFo">
+
+        <header><h1><b>RESEARCH ARCHIVES RECORD OVERVIEW</b></h1></header>
+
+            <b>IRN: </b> <xsl:value-of select="/table/tuple/atom[@name='RecordIRN']"/><br/>
             <b>Type: </b> <xsl:value-of select="/table/tuple/atom[@name='BibType']"/><br/>
             <b>Call Number: </b> <xsl:value-of select="/table/tuple/atom[@name='BibCallNumber']"/><br/>
             <b>Title: </b> <xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/><br/>
@@ -30,15 +34,32 @@
                 </xsl:if>    
             </xsl:for-each>
             
+            <b>Edition: </b> <xsl:value-of select="/table/tuple/atom[@name='BibEdition']"/><br/>
             <b>Publisher: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='NamOrganisation']"/><br/>
             <b>Publication City: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='BibPublicationCity']"/><br/>
             <b>Parent Date: </b> <xsl:value-of select="/table/tuple/table/tuple/atom[@name='ParentDate']"/><br/>
             <b>Date: </b> <xsl:value-of select="/table/tuple/atom[@name='BibPublicationDate']"/><br/>
             <b>Pages: </b> <xsl:value-of select="/table/tuple/atom[@name='BibPageNumber']"/><br/>
+            <b>Extension: </b> <xsl:value-of select="/table/tuple/atom[@name='BibExtension']"/><br/>
+            
+            <!-- Loop through Languages -->
+
+            <xsl:for-each select="/table/tuple/table/tuple">
+                <xsl:if test="count(atom[@name='BibLanguage'][normalize-space()]) > 0">
+                    <b>Language: </b> <xsl:value-of select="atom[@name='BibLanguage']"/><br/>
+                </xsl:if>
+            </xsl:for-each>
+
+        <header><h2><b>LOCATIONS</b></h2></header>
+        <p></p>
+
             <b>Current Location: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='CurrentLocation']"/><br/>
             <b>Permanent Location: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='PermanentLocation']"/><br/>
             
-             <!-- Loop through Notes -->
+        <header><h2><b>NOTES</b></h2></header>
+        <p></p>
+
+            <!-- Loop through Notes -->
 
             <xsl:for-each select="/table/tuple/table/tuple">
                 <xsl:if test="count(atom[@name='NteNotes'][normalize-space()]) > 0">
@@ -54,11 +75,26 @@
                 </xsl:if>
             </xsl:for-each>
 
-           <!-- Loop through note dates -->
+           <!-- Loop through Note Dates -->
 
             <xsl:for-each select="/table/tuple/table/tuple">
                 <xsl:if test="count(atom[@name='NteDate'][normalize-space()]) > 0">
                     <b>Note Date: </b> <xsl:value-of select="atom[@name='NteDate']"/><br/>
+                </xsl:if>
+            </xsl:for-each>
+
+        <header><h2><b>ACCESSION</b></h2></header>
+        <p></p>
+
+            <b>Accession IRN: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='AccessionIRN']"/><br/>
+            <b>Accession Method: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='AcqAcquisitionMethod']"/><br/>
+            <b>Accession Date: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='AccessionDateReceived']"/><br/>
+
+        <!-- Loop through Donor Names -->
+
+             <xsl:for-each select="/table/tuple/tuple[@name='AccAccessionLotRef']/table[@name='AcqSourceRef_tab']/tuple">
+                <xsl:if test="count(atom[@name='DonorName'][normalize-space()]) > 0">
+                    <b>Source: </b> <xsl:value-of select="atom[@name='DonorName']"/><br/>
                 </xsl:if>
             </xsl:for-each>
 
