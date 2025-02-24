@@ -1,1 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:emu="http://kesoftware.com/emu">
+    <xsl:output method="html" encoding="ISO-8859-1"/>
+
+    <xsl:template match="/">
+      <html>
+        <head>
+          <title>Multimedia Preview</title>
+        </head>
+
+        <body bgcolor="#EBECFo">
+          <header>
+            <h1><b>MULTIMEDIA RECORD OVERVIEW</b></h1>
+          </header>
+
+          <b>Title: </b> 
+          <xsl:value-of select="/table/tuple/atom[@name='MulTitle']"/><br/>
+          <b>Source: </b> 
+          <xsl:value-of select="/table/tuple/atom[@name='DetSource']"/><br/>
+          <b>Description: </b>    
+          <div style="white-space: pre-wrap;">
+            <xsl:value-of select="/table/tuple/atom[@name='MulDescription']"/>
+          </div>
+        </body>
+      </html>
+    </xsl:template>
+</xsl:stylesheet>
 
