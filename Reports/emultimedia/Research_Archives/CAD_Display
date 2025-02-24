@@ -15,6 +15,31 @@
 
           <b>Title: </b> 
           <xsl:value-of select="/table/tuple/atom[@name='MulTitle']"/><br/>
+          
+          <!-- Loop through Author Names -->
+          
+          <xsl:for-each select="/table/tuple/table/tuple">
+                <xsl:if test="count(atom[@name='NamCitedName'][normalize-space()]) > 0">
+                    <b>Name: </b> <xsl:value-of select="atom[@name='NamCitedName']"/><br/>
+                </xsl:if>
+          </xsl:for-each>   
+
+          <!-- Loop through Roles -->
+          
+          <xsl:for-each select="/table/tuple/table/tuple">
+                <xsl:if test="count(atom[@name='MulPartyRole'][normalize-space()]) > 0">
+                    <b>Role: </b> <xsl:value-of select="atom[@name='MulPartyRole']"/><br/>
+                </xsl:if>
+          </xsl:for-each>  
+
+          <!-- Loop through Dates -->
+                    
+          <xsl:for-each select="/table/tuple/table/tuple">
+                <xsl:if test="count(atom[@name='MulDate'][normalize-space()]) > 0">
+                    <b>Date: </b> <xsl:value-of select="atom[@name='MulDate']"/><br/>
+                </xsl:if>
+          </xsl:for-each> 
+        
           <b>Source: </b> 
           <xsl:value-of select="/table/tuple/atom[@name='DetSource']"/><br/>
           <b>Description: </b>    
@@ -25,4 +50,3 @@
       </html>
     </xsl:template>
 </xsl:stylesheet>
-
