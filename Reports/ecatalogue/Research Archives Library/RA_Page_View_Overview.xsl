@@ -152,9 +152,24 @@
                     <b>Parent Title: </b> <xsl:value-of select="atom[@name='ParentTitle']"/><br/>
                 </xsl:if>    
             </xsl:for-each>
+
+            <!-- Loop through Volume Numbers -->
+
+            <xsl:for-each select="/table/tuple/table/tuple">
+                <xsl:if test="count(atom[@name='ColParentVolumeNumber'][normalize-space()]) > 0">
+                    <b>Volume: </b> <xsl:value-of select="atom[@name='ColParentVolumeNumber']"/><br/>
+                </xsl:if>    
+            </xsl:for-each>
+
+            <!-- Loop through Issue Numberes -->
+
+            <xsl:for-each select="/table/tuple/table/tuple">
+                <xsl:if test="count(atom[@name='ColParentIssueNumber'][normalize-space()]) > 0">
+                    <b>Issue: </b> <xsl:value-of select="atom[@name='ColParentIssueNumber']"/><br/>
+                </xsl:if>    
+            </xsl:for-each>
             
             <b>Parent Date: </b> <xsl:value-of select="/table/tuple/table/tuple/atom[@name='ParentDate']"/><br/>
-            
             <b>Edition: </b> <xsl:value-of select="/table/tuple/atom[@name='BibEdition']"/><br/>
             <b>Publisher: </b> <xsl:value-of select="/table/tuple/tuple/atom[@name='NamOrganisation']"/><br/>
             <b>Publication City: </b> <xsl:value-of select="/table/tuple/atom[@name='BibPublicationCity']"/><br/>
@@ -170,6 +185,84 @@
                 </xsl:if>
             </xsl:for-each>
 
+            <b>Abstract: </b> <xsl:value-of select="/table/tuple/atom[@name='SumSummaryAbstract']"/><br/>
+        <P></P>
+
+        <b>Citation: </b>
+        <xsl:choose>
+            <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Journal Volume Article'">
+                <xsl:for-each select="/table/tuple/table[@name='BibAuthorEditorRef_tab']/tuple">
+                    <xsl:value-of select="atom[@name='NamCitedName']"/>
+                    <xsl:if test="position() != last()">, </xsl:if>
+                </xsl:for-each>
+                <xsl:text>. "</xsl:text>
+                <xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/>
+                <xsl:text>." </xsl:text>
+                <xsl:for-each select="/table/tuple/table[@name='ColMultiParentRecordRef_tab']/tuple">
+                    <i><xsl:value-of select="atom[@name='ParentTitle']"/></i>
+                    <xsl:text> (</xsl:text>
+                    <xsl:value-of select="atom[@name='ParentDate']"/>
+                </xsl:for-each>
+                <xsl:text>), </xsl:text>
+                <xsl:value-of select="/table/tuple/atom[@name='BibPageNumber']"/>
+                <xsl:text>.</xsl:text><br/>
+            </xsl:when>
+            
+            <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Series Volume'">
+                <xsl:for-each select="/table/tuple/table[@name='BibAuthorEditorRef_tab']/tuple">
+                    <xsl:value-of select="atom[@name='NamCitedName']"/>
+                    <xsl:if test="position() != last()">, </xsl:if>
+                </xsl:for-each>
+                <xsl:text>. </xsl:text>
+                <i><xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/></i>
+                <xsl:text>. </xsl:text>
+                
+                <!-- Parent Title -->
+                <xsl:for-each select="/table/tuple/table[@name='ColMultiParentRecordRef_tab']/tuple">
+                    <xsl:value-of select="atom[@name='ParentTitle']"/>
+                    <xsl:text> </xsl:text>
+                </xsl:for-each>
+                
+                <!-- Volume Number -->
+                <xsl:for-each select="/table/tuple/table[@name='ColParentVolumeNumber_tab']/tuple">
+                    <xsl:value-of select="atom[@name='ColParentVolumeNumber']"/>
+                    
+                    <!-- Conditional colon: only add if issue number is present -->
+                    <xsl:if test="/table/tuple/table[@name='ColParentIssueNumber_tab']/tuple/atom[@name='ColParentIssueNumber'] != ''">
+                        <xsl:text>:</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+                
+                <!-- Issue Number -->
+                <xsl:for-each select="/table/tuple/table[@name='ColParentIssueNumber_tab']/tuple">
+                    <xsl:value-of select="atom[@name='ColParentIssueNumber']"/>
+                </xsl:for-each>
+                
+                <xsl:text> (</xsl:text>
+                <xsl:value-of select="/table/tuple/atom[@name='BibPublicationDate']"/>
+                <xsl:text>).</xsl:text>
+                <br/>
+            </xsl:when>
+            
+            <xsl:when test="/table/tuple/atom[@name='BibType'] = 'Series Volume Section'">
+                <xsl:for-each select="/table/tuple/table[@name='BibAuthorEditorRef_tab']/tuple">
+                    <xsl:value-of select="atom[@name='NamCitedName']"/>
+                    <xsl:if test="position() != last()">, </xsl:if>
+                </xsl:for-each>
+                <xsl:text>. "</xsl:text>
+                <xsl:value-of select="/table/tuple/atom[@name='BibTitle']"/>
+                <xsl:text>." </xsl:text>
+                <xsl:for-each select="/table/tuple/table[@name='ColMultiParentRecordRef_tab']/tuple">
+                    <i><xsl:value-of select="atom[@name='ParentTitle']"/></i>
+                    <xsl:text> (</xsl:text>
+                    <xsl:value-of select="atom[@name='ParentDate']"/>
+                </xsl:for-each>
+                <xsl:text>), </xsl:text>
+                <xsl:value-of select="/table/tuple/atom[@name='BibPageNumber']"/>
+                <xsl:text>.</xsl:text><br/>
+            </xsl:when>
+        </xsl:choose>
+        
         <header><h2><b>LOCATIONS</b></h2></header>
         <p></p>
 
